@@ -22,13 +22,13 @@ export const register = async (req, res) => {
         })
 
         const user = await doc.save()
-
+   
         const token = jwt.sign({
             _id: user._id,
         }, 'secretKey', {
             expiresIn: '30d',
         })
-
+        console.log(token)
         const { passwordHash, ...userData } = user._doc
 
         res.json({
@@ -38,6 +38,7 @@ export const register = async (req, res) => {
     } catch (err) {
         console.error(err)
         res.status(500).json({
+            err: err,
             message: 'Не удалось зарегистрироваться'
         })
     }
@@ -103,6 +104,27 @@ export const getMe = async (req, res) => {
         console.error(err)
         res.status(500).json({
             message: 'Нет доступа'
+        })
+    }
+}
+
+
+export const getAll = async (req, res) => {
+    try {
+        const users = await UserModel.find()
+        if(!users) {
+            return res.status(404).json({
+                message: "Пользователи не найдены"
+            })
+        }
+        res.json({
+            ...users
+        })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({
+            message: 'Не удалось подключиться'
         })
     }
 }
