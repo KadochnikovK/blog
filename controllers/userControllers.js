@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { validationResult } from 'express-validator'
 
 
-export { register, login, getMe }
+export { register, login, getMe, getAll }
 
 const register = async (req, res) => {
     try {
@@ -112,7 +112,7 @@ const getMe = async (req, res) => {
 }
 
 
-export const getAll = async (req, res) => {
+const getAll = async (req, res) => {
     try {
         const users = await UserModel.find()
         if(!users) {
