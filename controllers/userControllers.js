@@ -3,7 +3,10 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { validationResult } from 'express-validator'
 
-export const register = async (req, res) => {
+
+export { register, login, getMe }
+
+const register = async (req, res) => {
     try {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -45,7 +48,7 @@ export const register = async (req, res) => {
 
 }
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
     try {
         const user = await UserModel.findOne({
             email: req.body.email,
@@ -82,7 +85,7 @@ export const login = async (req, res) => {
     }
 }
 
-export const getMe = async (req, res) => {
+const getMe = async (req, res) => {
     try {
 
         const user = await UserModel.findById(req.userId)
