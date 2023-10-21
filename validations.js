@@ -13,3 +13,8 @@ export const articleCreateValidation = [
     body('tags', 'Неверный формат тегов (укажите массив)').optional().isArray(),
     body('imageUrl', 'Неверная ссылка на изобрпжение').optional().isString(),
 ]
+
+export const loginValidation = [
+    body('email', 'Неверный формат почты').isEmail(),
+    body('password', 'Короткий пароль').isLength({ min: 5 }),
+]
